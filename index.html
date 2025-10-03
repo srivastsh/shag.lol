@@ -3,8 +3,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>shag.lol 😁 bounce</title>
+    <title>shag</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="😁😁😁">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😁</text></svg>">
     <style>
       :root { color-scheme: light dark; }
       html, body { height: 100%; margin: 0; }
@@ -30,7 +32,7 @@
       }
       #starter {
         font-size: 96px;
-        cursor: default;
+        cursor: pointer;
         user-select: none;
         z-index: 10;
       }
@@ -38,14 +40,10 @@
         position: fixed;
         right: 12px;
         bottom: 10px;
-        font-size: 14px;
-        line-height: 1;
+        font-size: 20px;
         opacity: 0;
-        transition: opacity 180ms ease;
+        transition: opacity 200ms ease;
         z-index: 20;
-        user-select: none;
-      }
-      .dottext {
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
         letter-spacing: 2px;
         color: CanvasText;
@@ -63,10 +61,9 @@
     </style>
   </head>
   <body>
-    <div id="starter" aria-label="shag.lol">😁</div>
+    <div id="starter" aria-label="Spawn bouncing emojis" role="button" tabindex="0">😁</div>
     <div id="canvas" aria-hidden="true"></div>
-    <div id="counter" class="dottext" aria-live="polite" aria-atomic="true" role="status">0</div>
-
+    <div id="counter" aria-live="polite" aria-atomic="true" role="status">0</div>
     <script>
       const COUNT = 100;
       const SIZE = 32;
@@ -78,41 +75,51 @@
       let lastTs = null;
       let bounds = { w: window.innerWidth, h: window.innerHeight };
       let running = false;
-      let activated = false;
 
       const starter = document.getElementById('starter');
       const canvas = document.getElementById('canvas');
       const counter = document.getElementById('counter');
 
-      function rand(min, max) { return Math.random() * (max - min) + min; }
-      function updateCounter() { counter.textContent = String(emojis.length); }
-      function showCounter() { counter.style.opacity = '1'; }
+      function rand(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function updateCounter() {
+        counter.textContent = String(emojis.length);
+      }
+
+      function showCounter() {
+        counter.style.opacity = '1';
+      }
 
       function createEmoji() {
         const el = document.createElement('div');
         el.className = 'emoji';
         el.textContent = '😁';
+
         const x = rand(0, Math.max(0, bounds.w - SIZE));
         const y = rand(0, Math.max(0, bounds.h - SIZE));
+
         const angle = rand(0, Math.PI * 2);
         const speed = rand(MIN_SPEED, MAX_SPEED);
         const vx = Math.cos(angle) * speed;
         const vy = Math.sin(angle) * speed;
+
         canvas.appendChild(el);
         el.style.transform = `translate(${x}px, ${y}px)`;
+
         return { el, x, y, vx, vy, size: SIZE };
       }
 
-      function spawnN(n) {
+      function spawn(n) {
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const startIndex = emojis.length;
         for (let i = 0; i < n; i++) {
           const e = createEmoji();
           emojis.push(e);
           if (prefersReduced) {
             const cols = Math.max(1, Math.floor(bounds.w / (SIZE + 8)));
-            const row = Math.floor((startIndex + i) / cols);
-            const col = (startIndex + i) % cols;
+            const row = Math.floor(i / cols);
+            const col = i % cols;
             e.x = col * (SIZE + 8) + 8;
             e.y = row * (SIZE + 8) + 8;
             e.vx = 0;
@@ -166,44 +173,31 @@
       window.addEventListener('resize', onResize);
 
       function activate() {
-        if (activated) return;
-        activated = true;
         starter.style.display = 'none';
         canvas.style.pointerEvents = 'none';
         showCounter();
-        spawnN(COUNT);
+        spawn(COUNT);
       }
 
-      const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-      let keys = [];
-      window.addEventListener('keydown', (e) => {
-        const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-        keys.push(k);
-        if (keys.length > KONAMI.length) keys.shift();
-        const match = KONAMI.every((code, i) => code === keys[i]);
-        if (match) activate();
-      });
-
-      let lastClick = 0;
-      starter.addEventListener('click', () => {
-        const now = performance.now();
-        if (now - lastClick < 300) activate();
-        lastClick = now;
+      starter.addEventListener('click', activate);
+      starter.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activate();
+        }
       });
 
       document.addEventListener('click', (e) => {
-        if (!activated) return;
+        if (starter.style.display !== 'none') return;
         const burst = 10;
-        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         for (let i = 0; i < burst; i++) {
           const obj = createEmoji();
           obj.x = (e.clientX || bounds.w / 2) - SIZE / 2;
           obj.y = (e.clientY || bounds.h / 2) - SIZE / 2;
-          obj.el.style.transform = `translate(${obj.x}px, ${obj.y}px)`;
           emojis.push(obj);
         }
         updateCounter();
-        if (!running && !prefersReduced) start();
+        if (!running && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) start();
       });
 
       document.addEventListener('visibilitychange', () => {
