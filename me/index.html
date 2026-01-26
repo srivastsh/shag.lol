@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Shagun S. - Links</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Links and projects by Shagun S.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😁</text></svg>">
+    <style>
+      :root { 
+        color-scheme: light dark;
+        --accent: #6366f1;
+        --accent-hover: #4f46e5;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --card-border: rgba(255, 255, 255, 0.1);
+        --shadow: rgba(0, 0, 0, 0.1);
+      }
+      
+      @media (prefers-color-scheme: light) {
+        :root {
+          --card-bg: rgba(0, 0, 0, 0.02);
+          --card-border: rgba(0, 0, 0, 0.08);
+          --shadow: rgba(0, 0, 0, 0.05);
+        }
+      }
+      
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      html, body { 
+        height: 100%;
+        margin: 0;
+      }
+      
+      body {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: Canvas;
+        color: CanvasText;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      
+      .container {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      header {
+        text-align: center;
+        margin-bottom: 48px;
+        animation: fadeInDown 0.6s ease;
+      }
+      
+      .profile-emoji {
+        font-size: 96px;
+        line-height: 1;
+        margin-bottom: 16px;
+        animation: bounce 2s ease infinite;
+        display: inline-block;
+      }
+      
+      h1 {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        letter-spacing: -0.02em;
+      }
+      
+      .tagline {
+        font-size: 18px;
+        opacity: 0.7;
+        margin-bottom: 24px;
+      }
+      
+      .home-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+      }
+      
+      .home-link:hover {
+        background: var(--accent);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px var(--shadow);
+      }
+      
+      .links-section {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 48px;
+      }
+      
+      .section-title {
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        opacity: 0.5;
+        margin-bottom: 8px;
+        margin-top: 32px;
+      }
+      
+      .section-title:first-of-type {
+        margin-top: 0;
+      }
+      
+      .link-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px 24px;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 0.5s ease backwards;
+      }
+      
+      .link-card:nth-child(1) { animation-delay: 0.1s; }
+      .link-card:nth-child(2) { animation-delay: 0.15s; }
+      .link-card:nth-child(3) { animation-delay: 0.2s; }
+      .link-card:nth-child(4) { animation-delay: 0.25s; }
+      .link-card:nth-child(5) { animation-delay: 0.3s; }
+      .link-card:nth-child(6) { animation-delay: 0.35s; }
+      .link-card:nth-child(7) { animation-delay: 0.4s; }
+      .link-card:nth-child(8) { animation-delay: 0.45s; }
+      
+      .link-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      .link-card:hover::before {
+        opacity: 0.05;
+      }
+      
+      .link-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px var(--shadow);
+        border-color: var(--accent);
+      }
+      
+      .link-icon {
+        font-size: 32px;
+        line-height: 1;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 1;
+      }
+      
+      .link-content {
+        flex: 1;
+        position: relative;
+        z-index: 1;
+      }
+      
+      .link-title {
+        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: 4px;
+      }
+      
+      .link-description {
+        font-size: 14px;
+        opacity: 0.7;
+      }
+      
+      .link-arrow {
+        font-size: 20px;
+        opacity: 0.5;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
+      }
+      
+      .link-card:hover .link-arrow {
+        opacity: 1;
+        transform: translateX(4px);
+      }
+      
+      footer {
+        margin-top: auto;
+        text-align: center;
+        padding: 32px 0;
+        opacity: 0.5;
+        font-size: 14px;
+      }
+      
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+      
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+      
+      @media (max-width: 640px) {
+        .container {
+          padding: 24px 16px;
+        }
+        
+        h1 {
+          font-size: 28px;
+        }
+        
+        .profile-emoji {
+          font-size: 72px;
+        }
+        
+        .link-card {
+          padding: 16px 20px;
+        }
+        
+        .link-icon {
+          font-size: 28px;
+        }
+        
+        .link-title {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="profile-emoji">😁</div>
+        <h1>Shagun S.</h1>
+        <p class="tagline">Developer, Creator, Dreamer</p>
+        <a href="/" class="home-link">
+          <span>←</span>
+          <span>Back to Home</span>
+        </a>
+      </header>
+      
+      <main>
+        <div class="section-title">Social</div>
+        <div class="links-section">
+          <a href="https://twitter.com/yourusername" class="link-card" target="_blank" rel="noopener noreferrer">
+            <div class="link-icon">🐦</div>
+            <div class="link-content">
+              <div class="link-title">Twitter</div>
+              <div class="link-description">Follow me for updates and thoughts</div>
+            </div>
+            <div class="link-arrow">→</div>
+          </a>
+          
+          <a href="https://linkedin.com/in/yourusername" class="link-card" target="_blank" rel="noopener noreferrer">
+            <div class="link-icon">💼</div>
+            <div class="link-content">
+              <div class="link-title">LinkedIn</div>
+              <div class="link-description">Let's connect professionally</div>
+            </div>
+            <div class="link-arrow">→</div>
+          </a>
+          
+          <a href="https://github.com/srivastsh" class="link-card" target="_blank" rel="noopener noreferrer">
+            <div class="link-icon">💻</div>
+            <div class="link-content">
+              <div class="link-title">GitHub</div>
+              <div class="link-description">Check out my code and projects</div>
+            </div>
+            <div class="link-arrow">→</div>
+          </a>
+        </div>
+        
+        <div class="section-title">Projects</div>
+        <div class="links-section">
+          <a href="https://github.com/srivastsh" class="link-card" target="_blank" rel="noopener noreferrer">
+            <div class="link-icon">🚀</div>
+            <div class="link-content">
+              <div class="link-title">Featured Project</div>
+              <div class="link-description">My latest work and experiments</div>
+            </div>
+            <div class="link-arrow">→</div>
+          </a>
+          
+          <a href="https://github.com/srivastsh?tab=repositories" class="link-card" target="_blank" rel="noopener noreferrer">
+            <div class="link-icon">📦</div>
+            <div class="link-content">
+              <div class="link-title">All Projects</div>
+              <div class="link-description">Browse my repositories</div>
+            </div>
+            <div class="link-arrow">→</div>
+          </a>
+        </div>
+        
+        <div class="section-title">Contact</div>
+        <div class="links-section">
+          <a href="mailto:hello@shag.lol" class="link-card">
+            <div class="link-icon">📧</div>
+            <div class="link-content">
+              <div class="link-title">Email</div>
+              <div class="link-description">hello@shag.lol</div>
+            </div>
+            <div class="link-arrow">→</div>
+          </a>
+          
+          <a href="https://shag.lol" class="link-card">
+            <div class="link-icon">🌐</div>
+            <div class="link-content">
+              <div class="link-title">Website</div>
+              <div class="link-description">shag.lol</div>
+            </div>
+            <div class="link-arrow">→</div>
+          </a>
+        </div>
+      </main>
+      
+      <footer>
+        <p>Made with 😁 by Shagun S.</p>
+      </footer>
+    </div>
+  </body>
+</html>
