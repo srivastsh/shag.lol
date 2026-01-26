@@ -7,16 +7,15 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😁</text></svg>">
     <style>
         :root {
-            /* High transparency variables matching image_a13d96.png */
-            --glass-card: rgba(255, 255, 255, 0.4);
-            --glass-item: rgba(255, 255, 255, 0.2);
+            --glass-card: rgba(255, 255, 255, 0.45);
+            --glass-item: rgba(255, 255, 255, 0.25);
             --text-main: #1d1d1f;
             --text-sub: #424245;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --glass-card: rgba(15, 15, 20, 0.4);
+                --glass-card: rgba(20, 20, 25, 0.4);
                 --glass-item: rgba(255, 255, 255, 0.08);
                 --text-main: #ffffff;
                 --text-sub: #a1a1a6;
@@ -34,7 +33,7 @@
             background-color: #000;
         }
 
-        /* Deep Background Blur Layer */
+        /* Deeply blurred background layer */
         .bg-layer {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background-size: cover; background-position: center;
@@ -44,33 +43,33 @@
             transition: background-image 1.2s ease-in-out;
         }
 
-        /* Main Dashboard Card */
+        /* Borderless Main Card */
         .main-card {
             width: 100%; height: 100%;
             max-width: 440px; max-height: 850px;
             background: var(--glass-card);
-            -webkit-backdrop-filter: blur(15px) saturate(160%); 
-            backdrop-filter: blur(15px) saturate(160%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%); 
+            backdrop-filter: blur(15px) saturate(180%);
+            border: none; /* Removed borders per request */
             display: flex; flex-direction: column; 
-            padding: 35px; gap: 20px;
+            padding: 35px; gap: 24px;
             animation: fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         @media (min-width: 600px) {
             .main-card { 
                 height: auto; border-radius: 56px; 
-                border: 1px solid rgba(255,255,255,0.15);
                 box-shadow: 0 50px 100px rgba(0,0,0,0.1);
             }
         }
 
-        /* Header matching image_ab9876.png */
+        /* Header matching the new requested layout */
         .card-header {
             display: flex; justify-content: space-between; align-items: center;
             font-size: 0.9rem; font-weight: 500; opacity: 0.8;
         }
-        .palm-icon svg { width: 24px; height: 24px; fill: var(--text-main); }
-        .initials { font-weight: 800; letter-spacing: 0.5px; }
+        .date-display { font-weight: 600; color: var(--text-sub); }
+        .initials { font-weight: 800; letter-spacing: 0.5px; color: var(--text-main); }
 
         /* Crisp Hero Section */
         .hero-img {
@@ -81,9 +80,9 @@
             transition: background-image 1.2s ease-in-out;
         }
 
-        .card-greeting { text-align: center; margin-top: 10px; }
+        .card-greeting { text-align: center; }
         .card-greeting h1 { font-size: 1.85rem; font-weight: 600; margin: 0; letter-spacing: -0.03em; }
-        .card-greeting p { font-size: 1rem; margin: 8px 0 0 0; color: var(--text-sub); }
+        .card-greeting p { font-size: 1rem; margin: 10px 0 0 0; color: var(--text-sub); font-weight: 450; }
 
         /* Floating borderless grid */
         .dock {
@@ -93,6 +92,7 @@
 
         .dock-item {
             background: var(--glass-item);
+            border: none; /* Removed borders per request */
             border-radius: 36px;
             aspect-ratio: 1 / 1;
             display: flex; align-items: center; justify-content: center;
@@ -114,10 +114,7 @@
 
     <div class="main-card">
         <div class="card-header">
-            <div class="palm-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2c-5.33 4-8 7.67-8 11 0 3.31 2.69 6 6 6v3h4v-3c3.31 0 6-2.69 6-6 0-3.33-2.67-7-8-11zm-2.5 8c.83 0 1.5.67 1.5 1.5S10.33 13 9.5 13s-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zM12 17c-1.66 0-3-1.34-3-3 0-.55.45-1 1-1s1 .45 1 1c0 .55.45 1 1 1s1-.45 1-1c0-.55.45-1 1-1s1 .45 1 1c0 1.66-1.34 3-3 3zm2.5-5.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-            </div>
-            <div id="current-date">---</div>
+            <div id="current-date" class="date-display">---</div>
             <div class="initials">SS</div>
         </div>
 
