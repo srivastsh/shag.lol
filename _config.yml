@@ -1,0 +1,4 @@
+# Jekyll configuration for GitHub Pages
+permalink: pretty
+include:
+  - me
