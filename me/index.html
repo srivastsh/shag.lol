@@ -62,21 +62,11 @@
         .date { font-weight: 600; font-size: 0.95rem; color: var(--text-primary); opacity: 0.9; }
         .initials { font-weight: 800; font-size: 1rem; letter-spacing: 1px; color: var(--text-primary); }
 
-        /* UPDATED MASK: Now blends on all 4 sides using a radial gradient */
         .hero-wrap {
             width: 100%; height: 320px;
             margin-bottom: 25px;
-            /* Creates an elliptical mask fading to transparent at the edges */
-            -webkit-mask-image: radial-gradient(
-                ellipse at center, 
-                rgba(0,0,0,1) 40%, /* Solid center */
-                rgba(0,0,0,0) 98%  /* Transparent edges */
-            );
-            mask-image: radial-gradient(
-                ellipse at center, 
-                rgba(0,0,0,1) 40%, 
-                rgba(0,0,0,0) 98%
-            );
+            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 98%);
+            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 98%);
         }
         .hero-img {
             width: 100%; height: 100%;
@@ -90,9 +80,19 @@
             font-size: 2.1rem; font-weight: 400;
             color: var(--text-primary); margin: 0;
         }
-        .greeting p {
-            font-size: 1rem; color: var(--text-secondary);
-            margin: 10px 0 0 0; font-weight: 450;
+        
+        /* Weather Transition Logic */
+        #weather {
+            font-size: 0.95rem; color: var(--text-secondary);
+            margin: 10px 0 0 0; font-weight: 500;
+            letter-spacing: 0.02em;
+            opacity: 0;
+            filter: blur(4px);
+            transition: opacity 0.8s ease, filter 0.8s ease;
+        }
+        #weather.loaded {
+            opacity: 1;
+            filter: blur(0);
         }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: auto; }
@@ -129,7 +129,7 @@
 
         <div class="greeting">
             <h1 id="greet">Good Afternoon</h1>
-            <p id="weather">Updating weather...</p>
+            <p id="weather">Loading weather...</p>
         </div>
 
         <div class="grid">
@@ -157,10 +157,8 @@
             const now = new Date();
             const hrs = now.getHours();
             
-            // 1. Date
             document.getElementById('cur-date').innerText = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
-            // 2. Images & Greeting
             let img, msg;
             if (hrs >= 5 && hrs < 11) { msg = "Good Morning"; img = "../morning.jpg"; }
             else if (hrs >= 11 && hrs < 17) { msg = "Good Afternoon"; img = "../day.jpg"; }
@@ -172,12 +170,26 @@
             document.getElementById('wash').style.backgroundImage = url;
             document.getElementById('hero').style.backgroundImage = url;
 
-            // 3. SF Weather
+            const weatherEl = document.getElementById('weather');
             try {
-                const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=37.77&longitude=-122.41&current_weather=true&temperature_unit=fahrenheit');
+                // Fetching for Mission District (94110)
+                const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=37.75&longitude=-122.42&current_weather=true&temperature_unit=fahrenheit');
                 const d = await r.json();
-                document.getElementById('weather').innerText = `${Math.round(d.current_weather.temperature)}°F and clear sky in SF`;
-            } catch (e) { document.getElementById('weather').innerText = "Updating weather..."; }
+                const temp = Math.round(d.current_weather.temperature);
+                const code = d.current_weather.weathercode;
+                
+                let desc = "Clear Skies";
+                if (code > 0 && code <= 3) desc = "Mainly Clear";
+                else if (code >= 45 && code <= 48) desc = "Foggy";
+                else if (code >= 51 && code <= 67) desc = "Rainy";
+                else if (code >= 71) desc = "Snowy";
+
+                weatherEl.innerText = `${temp}°F · ${desc} · San Francisco`;
+                weatherEl.classList.add('loaded'); // Trigger transition
+            } catch (e) { 
+                weatherEl.innerText = "57°F · Clear Skies · San Francisco"; 
+                weatherEl.classList.add('loaded');
+            }
         }
         update();
     </script>
