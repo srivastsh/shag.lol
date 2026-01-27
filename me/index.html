@@ -62,19 +62,21 @@
         .date { font-weight: 600; font-size: 0.95rem; color: var(--text-primary); opacity: 0.9; }
         .initials { font-weight: 800; font-size: 1rem; letter-spacing: 1px; color: var(--text-primary); }
 
+        /* UPDATED MASK: Now blends on all 4 sides using a radial gradient */
         .hero-wrap {
             width: 100%; height: 320px;
             margin-bottom: 25px;
-            -webkit-mask-image: linear-gradient(to bottom, 
-                rgba(0,0,0,0) 0%, 
-                rgba(0,0,0,1) 15%, 
-                rgba(0,0,0,1) 85%, 
-                rgba(0,0,0,0) 100%);
-            mask-image: linear-gradient(to bottom, 
-                rgba(0,0,0,0) 0%, 
-                rgba(0,0,0,1) 15%, 
-                rgba(0,0,0,1) 85%, 
-                rgba(0,0,0,0) 100%);
+            /* Creates an elliptical mask fading to transparent at the edges */
+            -webkit-mask-image: radial-gradient(
+                ellipse at center, 
+                rgba(0,0,0,1) 40%, /* Solid center */
+                rgba(0,0,0,0) 98%  /* Transparent edges */
+            );
+            mask-image: radial-gradient(
+                ellipse at center, 
+                rgba(0,0,0,1) 40%, 
+                rgba(0,0,0,0) 98%
+            );
         }
         .hero-img {
             width: 100%; height: 100%;
@@ -155,7 +157,7 @@
             const now = new Date();
             const hrs = now.getHours();
             
-            // 1. Date (Mon, Jan 26)
+            // 1. Date
             document.getElementById('cur-date').innerText = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
             // 2. Images & Greeting
@@ -175,7 +177,7 @@
                 const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=37.77&longitude=-122.41&current_weather=true&temperature_unit=fahrenheit');
                 const d = await r.json();
                 document.getElementById('weather').innerText = `${Math.round(d.current_weather.temperature)}°F and clear sky in SF`;
-            } catch (e) { document.getElementById('weather').innerText = "57°F and clear sky in SF"; }
+            } catch (e) { document.getElementById('weather').innerText = "Updating weather..."; }
         }
         update();
     </script>
