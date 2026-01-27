@@ -3,13 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>come say hi ◡̈</title>
+    <meta name="title" content="come say hi ◡̈" />
+    <meta name="description" content="shagun srivastava" />
 
-    <meta property="og:image" content="tag.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="tag.jpg">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://shag.lol/me/" />
+    <meta property="og:title" content="come say hi ◡̈" />
+    <meta property="og:description" content="shagun srivastava" />
+    <meta property="og:image" content="https://shag.lol/me/tag.jpg" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://shag.lol/me/" />
+    <meta property="twitter:title" content="come say hi ◡̈" />
+    <meta property="twitter:description" content="shagun srivastava" />
+    <meta property="twitter:image" content="https://shag.lol/me/tag.jpg" />
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😁</text></svg>">
+    
     <style>
         :root {
             --glass-card: rgba(235, 245, 255, 0.45);
@@ -65,7 +77,6 @@
             margin-bottom: 20px;
         }
 
-        /* Serif Header Fonts */
         .date { 
             font-family: "Georgia", serif;
             font-weight: 400; font-size: 1rem; color: var(--text-primary); opacity: 0.9; 
@@ -87,7 +98,7 @@
             font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
             margin-left: 10px; opacity: 0; transform: translateX(-15px);
             transition: opacity 0.4s ease, transform 0.4s ease;
-            font-family: -apple-system, sans-serif; /* Keep technical text clean */
+            font-family: -apple-system, sans-serif;
         }
         .name-wrapper.expanded .reveal-msg {
             opacity: 1; transform: translateX(0); transition-delay: 0.2s;
@@ -159,7 +170,7 @@
 
         <div class="grid">
             <a href="https://instagram.com/srivastsh" class="btn" target="_blank">
-                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.148 3.228-1.667 4.771-4.919 4.919-1.266.058-1.644.069-4.85.069s-3.584-.011-4.85-.069c-3.228-.148-4.771-1.667-4.919-4.919C2.175 15.584 2.164 15.204 2.164 12s.011-3.584.069-4.85C2.38 3.922 3.922 2.38 7.15 2.233c1.266-.058 1.645-.069 4.85-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.272 2.695.072 7.053.014 8.333 0 8.741 0 12s.014 3.667.072 4.947c.2 4.358 2.623 6.78 6.981 6.98 1.28.058 1.689.072 4.947.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.623 6.98-6.98.058-1.28.072-1.689.072-4.947s-.014-3.667-.072-4.947c-.2-4.358-2.623-6.78-6.98-6.98C15.667.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.148 3.228-1.667 4.771-4.919 4.919-1.266.058-1.644.069-4.85.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.272 2.695.072 7.053.014 8.333 0 8.741 0 12s.014 3.667.072 4.947c.2 4.358 2.623 6.78 6.981 6.98 1.28.058 1.689.072 4.947.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.623 6.98-6.98.058-1.28.072-1.689.072-4.947s-.014-3.667-.072-4.947c-.2-4.358-2.623-6.78-6.98-6.98C15.667.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
                 <span>Instagram</span>
             </a>
             <a href="https://x.com/srivastsh" class="btn" target="_blank">
@@ -182,10 +193,8 @@
             const now = new Date();
             const hrs = now.getHours();
             
-            // Set Dynamic Date
             document.getElementById('cur-date').innerText = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
-            // Cycle Assets based on Local Time
             let img, msg;
             if (hrs >= 5 && hrs < 11) { msg = "Good Morning"; img = "../morning.jpg"; }
             else if (hrs >= 11 && hrs < 17) { msg = "Good Afternoon"; img = "../day.jpg"; }
@@ -199,7 +208,7 @@
 
             const weatherEl = document.getElementById('weather');
             try {
-                // Precise Weather for 94110 (Mission District)
+                // Fetch live for 94110 Coordinates
                 const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=37.75&longitude=-122.42&current_weather=true&temperature_unit=fahrenheit');
                 const d = await r.json();
                 const temp = Math.round(d.current_weather.temperature);
@@ -212,7 +221,7 @@
                 else if (code >= 71) desc = "Snowy";
 
                 weatherEl.innerText = `${temp}°F · ${desc} · San Francisco`;
-                weatherEl.classList.add('loaded'); // Trigger transition
+                weatherEl.classList.add('loaded');
             } catch (e) { 
                 weatherEl.innerText = "57°F · Clear Skies · San Francisco"; 
                 weatherEl.classList.add('loaded');
