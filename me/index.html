@@ -7,16 +7,16 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😁</text></svg>">
     <style>
         :root {
-            --glass-card: rgba(235, 245, 255, 0.5); /* Tinted glass per image_ab9876 */
-            --glass-button: rgba(255, 255, 255, 0.4);
+            --glass-card: rgba(235, 245, 255, 0.45);
+            --glass-button: rgba(255, 255, 255, 0.35);
             --text-primary: #37474f;
             --text-secondary: #78909c;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --glass-card: rgba(20, 25, 35, 0.5);
-                --glass-button: rgba(255, 255, 255, 0.05);
+                --glass-card: rgba(18, 22, 30, 0.55);
+                --glass-button: rgba(255, 255, 255, 0.06);
                 --text-primary: #ffffff;
                 --text-secondary: #a1a1a6;
             }
@@ -32,53 +32,48 @@
             background-color: #000; overflow: hidden;
         }
 
-        /* Full-screen Deep Blur Wash */
         .bg-wash {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background-size: cover; background-position: center;
-            filter: blur(100px) brightness(0.95);
+            filter: blur(90px) brightness(0.9);
             transform: scale(1.4); z-index: -1;
             transition: background-image 1.5s ease;
         }
 
-        /* The Main Container */
         .dashboard {
             width: 100%; height: 100%;
-            max-width: 450px; max-height: 900px;
+            max-width: 440px; max-height: 880px;
             background: var(--glass-card);
-            backdrop-filter: blur(30px) saturate(140%);
-            -webkit-backdrop-filter: blur(30px) saturate(140%);
+            backdrop-filter: blur(25px) saturate(150%);
+            -webkit-backdrop-filter: blur(25px) saturate(150%);
             display: flex; flex-direction: column;
-            padding: 40px 24px; border: none;
-            animation: fadeIn 1.2s ease-out;
+            padding: 40px 28px; border: none;
+            animation: fadeIn 1s ease-out;
         }
 
         @media (min-width: 600px) {
             .dashboard { border-radius: 60px; height: 95%; box-shadow: 0 50px 100px rgba(0,0,0,0.1); }
         }
 
-        /* Header matching image_ab9876.png */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px; font-weight: 500; font-size: 0.95rem;
-        }
-        .date { color: var(--text-secondary); }
-        .initials { font-weight: 800; letter-spacing: 1px; color: var(--text-primary); }
-        .palm svg { width: 28px; height: 28px; fill: var(--text-primary); opacity: 0.8; }
-
-        /* The "Borderless" Masked Image Effect */
-        .hero-wrap {
-            width: 100%; height: 350px;
             margin-bottom: 20px;
+        }
+        .date { font-weight: 600; font-size: 0.95rem; color: var(--text-primary); opacity: 0.9; }
+        .initials { font-weight: 800; font-size: 1rem; letter-spacing: 1px; color: var(--text-primary); }
+
+        .hero-wrap {
+            width: 100%; height: 320px;
+            margin-bottom: 25px;
             -webkit-mask-image: linear-gradient(to bottom, 
                 rgba(0,0,0,0) 0%, 
                 rgba(0,0,0,1) 15%, 
-                rgba(0,0,0,1) 80%, 
+                rgba(0,0,0,1) 85%, 
                 rgba(0,0,0,0) 100%);
             mask-image: linear-gradient(to bottom, 
                 rgba(0,0,0,0) 0%, 
                 rgba(0,0,0,1) 15%, 
-                rgba(0,0,0,1) 80%, 
+                rgba(0,0,0,1) 85%, 
                 rgba(0,0,0,0) 100%);
         }
         .hero-img {
@@ -87,39 +82,31 @@
             transition: background-image 1.5s ease;
         }
 
-        /* Greeting with Serif Font */
-        .greeting {
-            text-align: center; margin-bottom: 40px;
-        }
+        .greeting { text-align: center; margin-bottom: 35px; }
         .greeting h1 {
-            font-family: "Georgia", serif; /* Matches image_ab9876 style */
-            font-size: 2.2rem; font-weight: 400;
+            font-family: "Georgia", serif; 
+            font-size: 2.1rem; font-weight: 400;
             color: var(--text-primary); margin: 0;
         }
         .greeting p {
-            font-size: 1.1rem; color: var(--text-secondary);
+            font-size: 1rem; color: var(--text-secondary);
             margin: 10px 0 0 0; font-weight: 450;
         }
 
-        /* Bottom Button Layout */
-        .grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 16px; margin-top: auto;
-        }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: auto; }
 
         .btn {
             background: var(--glass-button);
-            border-radius: 32px; padding: 25px 15px;
+            border-radius: 34px; padding: 28px 10px;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             text-decoration: none; color: inherit;
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .btn:active { transform: scale(0.94); background: rgba(255,255,255,0.2); }
-        .btn svg { width: 28px; height: 28px; margin-bottom: 12px; fill: var(--text-primary); }
-        .btn span { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); }
+        .btn:active { transform: scale(0.92); background: rgba(255,255,255,0.15); }
+        .btn svg { width: 30px; height: 30px; margin-bottom: 12px; fill: var(--text-primary); }
+        .btn span { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -130,9 +117,6 @@
 
     <div class="dashboard">
         <header>
-            <div class="palm">
-                <svg viewBox="0 0 24 24"><path d="M12 2c-5.33 4-8 7.67-8 11 0 3.31 2.69 6 6 6v3h4v-3c3.31 0 6-2.69 6-6 0-3.33-2.67-7-8-11zm-2.5 8c.83 0 1.5.67 1.5 1.5S10.33 13 9.5 13s-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zM12 17c-1.66 0-3-1.34-3-3 0-.55.45-1 1-1s1 .45 1 1c0 .55.45 1 1 1s1-.45 1-1c0-.55.45-1 1-1s1 .45 1 1c0 1.66-1.34 3-3 3zm2.5-5.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-            </div>
             <div id="cur-date" class="date">---</div>
             <div class="initials">SS</div>
         </header>
@@ -143,7 +127,7 @@
 
         <div class="greeting">
             <h1 id="greet">Good Afternoon</h1>
-            <p id="weather">57°F and clear sky in SF</p>
+            <p id="weather">Updating weather...</p>
         </div>
 
         <div class="grid">
@@ -174,7 +158,7 @@
             // 1. Date (Mon, Jan 26)
             document.getElementById('cur-date').innerText = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
-            // 2. Background/Hero Images & Greeting
+            // 2. Images & Greeting
             let img, msg;
             if (hrs >= 5 && hrs < 11) { msg = "Good Morning"; img = "../morning.jpg"; }
             else if (hrs >= 11 && hrs < 17) { msg = "Good Afternoon"; img = "../day.jpg"; }
