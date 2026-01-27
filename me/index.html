@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>shag • dashboard</title>
+    <title>come say hi ◡̈</title>
+
+    <meta property="og:image" content="tag.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="tag.jpg">
+
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😁</text></svg>">
     <style>
         :root {
@@ -59,30 +64,35 @@
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 20px;
         }
-        .date { font-weight: 600; font-size: 0.95rem; color: var(--text-primary); opacity: 0.9; }
+
+        /* Serif Header Fonts */
+        .date { 
+            font-family: "Georgia", serif;
+            font-weight: 400; font-size: 1rem; color: var(--text-primary); opacity: 0.9; 
+        }
         
-        /* Natural Name Integration in Header */
         .name-wrapper {
             display: flex; align-items: center; cursor: pointer;
             overflow: hidden; white-space: nowrap;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            max-width: 80px; /* Wider for "SHAGUN" signature */
+            max-width: 90px;
         }
         .name-wrapper.expanded { max-width: 300px; }
         .name-text { 
-            font-weight: 700; font-size: 0.9rem; letter-spacing: 2px; 
-            color: var(--text-primary); text-transform: uppercase;
+            font-family: "Georgia", serif;
+            font-weight: 400; font-size: 1.1rem; 
+            color: var(--text-primary);
         }
         .reveal-msg {
             font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
             margin-left: 10px; opacity: 0; transform: translateX(-15px);
             transition: opacity 0.4s ease, transform 0.4s ease;
+            font-family: -apple-system, sans-serif; /* Keep technical text clean */
         }
         .name-wrapper.expanded .reveal-msg {
             opacity: 1; transform: translateX(0); transition-delay: 0.2s;
         }
 
-        /* Full 4-Side Radial Mask for Hero Image */
         .hero-wrap {
             width: 100%; height: 320px;
             margin-bottom: 25px;
@@ -102,7 +112,6 @@
             color: var(--text-primary); margin: 0;
         }
         
-        /* Blurred Weather Transition */
         #weather {
             font-size: 0.9rem; color: var(--text-secondary);
             margin: 10px 0 0 0; font-weight: 500;
