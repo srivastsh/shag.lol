@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sona 💝</title>
-    <meta name="title" content="Sona 💝" />
-    <meta name="description" content="A special question for a special person" />
+    <title>Sona</title>
+    <meta name="title" content="Sona" />
+    <meta name="description" content="hi sona" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://shag.lol/sona/" />
-    <meta property="og:title" content="Sona 💝" />
-    <meta property="og:description" content="A special question for a special person" />
-    <meta property="og:image" content="https://shag.lol/tag.jpg" />
+    <meta property="og:title" content="Sona" />
+    <meta property="og:description" content="hi sona" />
+    <meta property="og:image" content="https://shag.lol/sona/snoopy.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://shag.lol/sona/" />
-    <meta name="twitter:title" content="Sona 💝" />
-    <meta name="twitter:description" content="A special question for a special person" />
-    <meta name="twitter:image" content="https://shag.lol/tag.jpg" />
+    <meta name="twitter:title" content="Sona" />
+    <meta name="twitter:description" content="hi sona" />
+    <meta name="twitter:image" content="https://shag.lol/sona/snoopy.jpg" />
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💝</text></svg>">
 
@@ -32,250 +32,140 @@
             justify-content: center;
             align-items: center;
             font-family: "Georgia", serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .hearts-bg {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .heart {
-            position: absolute;
-            font-size: 20px;
-            animation: float 6s ease-in-out infinite;
-            opacity: 0.6;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+            background: #fff;
+            padding: 20px;
         }
 
         .container {
             text-align: center;
-            z-index: 10;
-            padding: 40px;
-            max-width: 500px;
+            max-width: 400px;
+            width: 100%;
         }
 
-        .name {
-            font-size: 3rem;
-            color: #fff;
-            margin-bottom: 10px;
-            animation: fadeInDown 1s ease-out;
+        .image-container {
+            margin-bottom: 30px;
+        }
+
+        .image-container img {
+            max-width: 280px;
+            width: 100%;
+            height: auto;
+        }
+
+        .greeting {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 15px;
         }
 
         .question {
-            font-size: 1.8rem;
-            color: #f8b4c4;
-            margin-bottom: 50px;
-            animation: fadeInDown 1s ease-out 0.3s both;
-            line-height: 1.4;
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 40px;
         }
 
         .buttons {
             display: flex;
             gap: 20px;
             justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease-out 0.6s both;
+            align-items: center;
         }
 
         .btn {
-            padding: 18px 50px;
-            font-size: 1.3rem;
+            padding: 15px 40px;
+            font-size: 1.2rem;
             font-family: "Georgia", serif;
-            border: none;
-            border-radius: 50px;
+            border: 2px solid #333;
+            border-radius: 30px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            background: #fff;
+            color: #333;
+        }
+
+        .btn:hover {
+            background: #333;
+            color: #fff;
         }
 
         .btn-yes {
-            background: linear-gradient(135deg, #ff6b9d, #ff8e53);
-            color: white;
-            box-shadow: 0 10px 40px rgba(255, 107, 157, 0.4);
+            background: #ff6b9d;
+            border-color: #ff6b9d;
+            color: #fff;
         }
 
         .btn-yes:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 50px rgba(255, 107, 157, 0.6);
+            background: #ff4785;
+            border-color: #ff4785;
         }
 
-        .btn-no {
-            background: rgba(255, 255, 255, 0.1);
-            color: #aaa;
-            backdrop-filter: blur(10px);
-            position: relative;
-            transition: all 0.1s ease;
+        #question-section {
+            animation: fadeIn 0.8s ease-out;
         }
 
-        .celebration {
+        #celebration {
             display: none;
-            flex-direction: column;
-            align-items: center;
-            animation: fadeInUp 0.5s ease-out;
+            animation: fadeIn 0.8s ease-out;
         }
 
-        .celebration.show {
-            display: flex;
+        #celebration.show {
+            display: block;
         }
 
-        .celebration-emoji {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            animation: pulse 0.5s ease infinite alternate;
+        .celebration-img {
+            max-width: 350px;
+            width: 100%;
+            height: auto;
         }
 
-        .celebration-text {
-            font-size: 2rem;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-
-        .celebration-sub {
-            font-size: 1.2rem;
-            color: #f8b4c4;
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
-        }
-
-        .confetti {
-            position: fixed;
-            pointer-events: none;
-            z-index: 100;
         }
 
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
-    <div class="hearts-bg" id="hearts"></div>
-
     <div class="container">
         <div id="question-section">
-            <h1 class="name">Sona</h1>
-            <p class="question">Will you be my Valentine? 💝</p>
+            <div class="image-container">
+                <img src="snoopy.jpg" alt="Snoopy with flower">
+            </div>
+            <p class="greeting">hi sona ◡̈</p>
+            <p class="question">will u be my valentine?</p>
             <div class="buttons">
-                <button class="btn btn-yes" onclick="sayYes()">Yes</button>
-                <button class="btn btn-no" id="noBtn">No</button>
+                <button class="btn btn-yes" id="yesBtn" onclick="sayYes()">Yes</button>
+                <button class="btn" id="noBtn" onclick="shrinkNo()">No</button>
             </div>
         </div>
 
-        <div class="celebration" id="celebration">
-            <div class="celebration-emoji">💖</div>
-            <div class="celebration-text">Yay!</div>
-            <div class="celebration-sub">You just made me the happiest person 🥹</div>
+        <div id="celebration">
+            <img class="celebration-img" src="snoops.jpg" alt="Snoopy love">
         </div>
     </div>
 
     <script>
-        // Floating hearts background
-        function createHearts() {
-            const container = document.getElementById('hearts');
-            const hearts = ['💕', '💗', '💖', '💝', '❤️', '🩷'];
-
-            for (let i = 0; i < 20; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (4 + Math.random() * 4) + 's';
-                heart.style.animationDelay = Math.random() * 6 + 's';
-                heart.style.fontSize = (15 + Math.random() * 20) + 'px';
-                container.appendChild(heart);
-            }
-        }
-        createHearts();
-
-        // No button runs away
+        let yesSize = 1;
+        let noSize = 1;
+        const yesBtn = document.getElementById('yesBtn');
         const noBtn = document.getElementById('noBtn');
-        let noAttempts = 0;
 
-        noBtn.addEventListener('mouseenter', moveNoButton);
-        noBtn.addEventListener('touchstart', moveNoButton);
+        function shrinkNo() {
+            noSize = Math.max(0.3, noSize - 0.15);
+            yesSize += 0.15;
 
-        function moveNoButton(e) {
-            e.preventDefault();
-            noAttempts++;
+            noBtn.style.transform = `scale(${noSize})`;
+            yesBtn.style.transform = `scale(${yesSize})`;
 
-            const messages = [
-                "Are you sure? 🥺",
-                "Think again! 💭",
-                "Pretty please? 🙏",
-                "One more chance? 💝",
-                "I'll be sad 😢",
-                "Reconsider? 💖"
-            ];
-
-            if (noAttempts <= messages.length) {
-                noBtn.textContent = messages[noAttempts - 1];
+            if (noSize <= 0.3) {
+                noBtn.style.opacity = '0.5';
             }
-
-            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-
-            const newX = Math.random() * maxX;
-            const newY = Math.random() * maxY;
-
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = newX + 'px';
-            noBtn.style.top = newY + 'px';
         }
 
-        // Yes celebration
         function sayYes() {
             document.getElementById('question-section').classList.add('hidden');
             document.getElementById('celebration').classList.add('show');
-            createConfetti();
-        }
-
-        function createConfetti() {
-            const colors = ['#ff6b9d', '#ff8e53', '#f8b4c4', '#fff', '#ffd700'];
-
-            for (let i = 0; i < 100; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.top = '-10px';
-                    confetti.style.width = '10px';
-                    confetti.style.height = '10px';
-                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                    document.body.appendChild(confetti);
-
-                    const duration = 2000 + Math.random() * 2000;
-                    confetti.animate([
-                        { top: '-10px', opacity: 1 },
-                        { top: '100vh', opacity: 0 }
-                    ], {
-                        duration: duration,
-                        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                    }).onfinish = () => confetti.remove();
-                }, i * 30);
-            }
         }
     </script>
 </body>
