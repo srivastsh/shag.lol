@@ -89,17 +89,6 @@
             position: relative; z-index: 10;
         }
 
-        .header-icon {
-            width: 28px; height: 28px;
-            opacity: 0.8;
-        }
-        .header-icon svg {
-            width: 100%; height: 100%;
-            stroke: var(--text-primary);
-            fill: none;
-            stroke-width: 1.5;
-        }
-
         .date {
             font-weight: 500;
             font-size: 0.95rem;
@@ -108,14 +97,26 @@
             letter-spacing: 0.02em;
         }
 
-        .initials {
-            font-family: "Georgia", serif;
-            font-weight: 400;
-            font-size: 1.1rem;
-            font-style: italic;
+        .name-wrapper {
+            display: flex; align-items: center; gap: 8px;
+            cursor: pointer; user-select: none;
+        }
+        .name-text {
+            font-weight: 600;
+            font-size: 0.95rem;
             color: var(--text-primary);
             opacity: 0.9;
-            letter-spacing: 0.05em;
+        }
+        .reveal-msg {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            opacity: 0; transform: translateX(-8px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            white-space: nowrap;
+            font-family: -apple-system, sans-serif;
+        }
+        .name-wrapper.expanded .reveal-msg {
+            opacity: 1; transform: translateX(0); transition-delay: 0.2s;
         }
 
         .hero-wrap {
@@ -226,14 +227,11 @@
 
     <div class="dashboard">
         <header>
-            <div class="header-icon">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="4"/>
-                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-                </svg>
-            </div>
             <div id="cur-date" class="date">---</div>
-            <div class="initials">SS</div>
+            <div class="name-wrapper" onclick="this.classList.toggle('expanded')">
+                <div class="name-text">Shagun</div>
+                <div class="reveal-msg">made with &lt;3 by shagun</div>
+            </div>
         </header>
 
         <div class="hero-wrap">
@@ -288,27 +286,22 @@
             document.getElementById('cur-date').innerText = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
             let img, msg;
-            const headerIcon = document.querySelector('.header-icon svg');
 
             if (hrs >= 5 && hrs < 11) {
                 msg = "Good morning";
                 img = "../morning.jpg";
-                headerIcon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
             }
             else if (hrs >= 11 && hrs < 17) {
                 msg = "Good afternoon";
                 img = "../day.jpg";
-                headerIcon.innerHTML = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
             }
             else if (hrs >= 17 && hrs < 21) {
                 msg = "Good evening";
                 img = "../evening.jpg";
-                headerIcon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 3v1M12 20v1M5.6 5.6l.7.7M17.7 17.7l.7.7M3 12h1M20 12h1M5.6 18.4l.7-.7M17.7 6.3l.7-.7"/>';
             }
             else {
                 msg = "Good night";
                 img = "../night.jpg";
-                headerIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
             }
 
             document.getElementById('greet').innerText = msg;
