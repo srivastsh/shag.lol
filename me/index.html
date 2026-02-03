@@ -98,6 +98,10 @@
             letter-spacing: 0.02em;
         }
 
+        .initials-wrapper {
+            display: flex; align-items: center; gap: 8px;
+            cursor: pointer; user-select: none;
+        }
         .initials {
             font-family: "Georgia", "Times New Roman", serif;
             font-weight: 400;
@@ -106,6 +110,16 @@
             color: var(--text-primary);
             opacity: 0.85;
             letter-spacing: 0.02em;
+        }
+        .reveal-msg {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            opacity: 0; transform: translateX(8px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            white-space: nowrap;
+        }
+        .initials-wrapper.expanded .reveal-msg {
+            opacity: 1; transform: translateX(0); transition-delay: 0.2s;
         }
 
         .hero-wrap {
@@ -221,7 +235,10 @@
     <div class="dashboard">
         <header>
             <div id="cur-date" class="date">---</div>
-            <div class="initials">SS</div>
+            <div class="initials-wrapper" onclick="this.classList.toggle('expanded')">
+                <div class="reveal-msg">made with &lt;3 by shagun</div>
+                <div class="initials">SS</div>
+            </div>
         </header>
 
         <div class="hero-wrap">
