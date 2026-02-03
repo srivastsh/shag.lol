@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>come say hi ◡̈</title>
     <meta name="title" content="come say hi ◡̈" />
     <meta name="description" content="shagun srivastava" />
@@ -21,21 +21,23 @@
     <meta name="twitter:image" content="https://shag.lol/tag.jpg" />
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😁</text></svg>">
-    
+
     <style>
         :root {
-            --glass-card: rgba(235, 245, 255, 0.45);
-            --glass-button: rgba(255, 255, 255, 0.35);
-            --text-primary: #37474f;
-            --text-secondary: #78909c;
+            --glass-card: rgba(20, 28, 40, 0.65);
+            --glass-button: rgba(255, 255, 255, 0.08);
+            --glass-button-border: rgba(255, 255, 255, 0.12);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
         }
 
-        @media (prefers-color-scheme: dark) {
+        @media (prefers-color-scheme: light) {
             :root {
-                --glass-card: rgba(18, 22, 30, 0.55);
-                --glass-button: rgba(255, 255, 255, 0.06);
-                --text-primary: #ffffff;
-                --text-secondary: #a1a1a6;
+                --glass-card: rgba(235, 245, 255, 0.55);
+                --glass-button: rgba(255, 255, 255, 0.45);
+                --glass-button-border: rgba(255, 255, 255, 0.5);
+                --text-primary: #1a1a2e;
+                --text-secondary: rgba(26, 26, 46, 0.6);
             }
         }
 
@@ -46,104 +48,176 @@
             height: 100dvh; width: 100vw;
             display: flex; justify-content: center; align-items: center;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-            background-color: #000; overflow: hidden;
+            background-color: #0a0e14; overflow: hidden;
+        }
+
+        @media (prefers-color-scheme: light) {
+            body { background-color: #1a1a2e; }
         }
 
         .bg-wash {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background-size: cover; background-position: center;
-            filter: blur(90px) brightness(0.9);
-            transform: scale(1.4); z-index: -1;
+            filter: blur(80px) brightness(0.7) saturate(1.2);
+            transform: scale(1.5); z-index: -1;
             transition: background-image 1.5s ease;
         }
 
         .dashboard {
             width: 100%; height: 100%;
-            max-width: 440px; max-height: 880px;
+            max-width: 440px; max-height: 900px;
             background: var(--glass-card);
-            backdrop-filter: blur(25px) saturate(150%);
-            -webkit-backdrop-filter: blur(25px) saturate(150%);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
             display: flex; flex-direction: column;
-            padding: 40px 28px; border: none;
-            animation: fadeIn 1s ease-out;
+            border: none;
+            animation: fadeIn 0.8s ease-out;
+            overflow: hidden;
         }
 
         @media (min-width: 600px) {
-            .dashboard { border-radius: 60px; height: 95%; box-shadow: 0 50px 100px rgba(0,0,0,0.1); }
+            .dashboard {
+                border-radius: 44px;
+                height: 95%;
+                box-shadow: 0 25px 80px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05);
+            }
         }
 
         header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px;
+            padding: 24px 28px 16px;
+            position: relative; z-index: 10;
         }
 
-        .date { 
-            font-family: "Georgia", serif;
-            font-weight: 400; font-size: 1rem; color: var(--text-primary); opacity: 0.9; 
+        .header-icon {
+            width: 28px; height: 28px;
+            opacity: 0.8;
         }
-        
-        .name-wrapper {
-            display: flex; align-items: center; cursor: pointer;
-            overflow: hidden; white-space: nowrap;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            max-width: 90px;
+        .header-icon svg {
+            width: 100%; height: 100%;
+            stroke: var(--text-primary);
+            fill: none;
+            stroke-width: 1.5;
         }
-        .name-wrapper.expanded { max-width: 300px; }
-        .name-text { 
-            font-family: "Georgia", serif;
-            font-weight: 400; font-size: 1.1rem; 
+
+        .date {
+            font-weight: 500;
+            font-size: 0.95rem;
             color: var(--text-primary);
+            opacity: 0.9;
+            letter-spacing: 0.02em;
         }
-        .reveal-msg {
-            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
-            margin-left: 10px; opacity: 0; transform: translateX(-15px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            font-family: -apple-system, sans-serif;
-        }
-        .name-wrapper.expanded .reveal-msg {
-            opacity: 1; transform: translateX(0); transition-delay: 0.2s;
+
+        .initials {
+            font-family: "Georgia", serif;
+            font-weight: 400;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--text-primary);
+            opacity: 0.9;
+            letter-spacing: 0.05em;
         }
 
         .hero-wrap {
-            width: 100%; height: 320px;
-            margin-bottom: 25px;
-            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 98%);
-            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 98%);
+            flex: 1;
+            width: 100%;
+            min-height: 280px;
+            position: relative;
+            overflow: hidden;
         }
         .hero-img {
             width: 100%; height: 100%;
-            background-size: cover; background-position: center;
+            background-size: cover;
+            background-position: center;
             transition: background-image 1.5s ease;
         }
+        .hero-fade {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 120px;
+            background: linear-gradient(to top, var(--glass-card) 0%, transparent 100%);
+            pointer-events: none;
+        }
 
-        .greeting { text-align: center; margin-bottom: 35px; }
+        .content {
+            padding: 0 28px 32px;
+        }
+
+        .greeting {
+            text-align: center;
+            margin-bottom: 28px;
+        }
         .greeting h1 {
-            font-family: "Georgia", serif; 
-            font-size: 2.1rem; font-weight: 400;
-            color: var(--text-primary); margin: 0;
+            font-family: "Georgia", serif;
+            font-size: 1.85rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin: 0;
+            letter-spacing: 0.01em;
         }
-        
-        #weather {
-            font-size: 0.9rem; color: var(--text-secondary);
-            margin: 10px 0 0 0; font-weight: 500;
-            letter-spacing: 0.02em; opacity: 0; filter: blur(4px);
-            transition: opacity 0.8s ease, filter 0.8s ease;
-        }
-        #weather.loaded { opacity: 1; filter: blur(0); }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: auto; }
+        #weather {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 8px 0 0 0;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        #weather.loaded { opacity: 1; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
         .btn {
-            background: var(--glass-button); border-radius: 34px;
-            padding: 28px 10px; display: flex; flex-direction: column;
+            background: var(--glass-button);
+            border: 1px solid var(--glass-button-border);
+            border-radius: 20px;
+            padding: 22px 10px;
+            display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             text-decoration: none; color: inherit;
-            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: all 0.2s ease;
         }
-        .btn:active { transform: scale(0.92); background: rgba(255,255,255,0.15); }
-        .btn svg { width: 30px; height: 30px; margin-bottom: 12px; fill: var(--text-primary); }
-        .btn span { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
+        .btn:hover {
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.18);
+        }
+        .btn:active {
+            transform: scale(0.96);
+            background: rgba(255,255,255,0.06);
+        }
+        .btn svg {
+            width: 26px; height: 26px;
+            margin-bottom: 10px;
+            stroke: var(--text-primary);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .btn span {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.02em;
+        }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body id="body">
@@ -152,39 +226,57 @@
 
     <div class="dashboard">
         <header>
-            <div id="cur-date" class="date">---</div>
-            <div class="name-wrapper" onclick="this.classList.toggle('expanded')">
-                <div class="name-text">Shagun</div>
-                <div class="reveal-msg">made with &lt;3 by shagun</div>
+            <div class="header-icon">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                </svg>
             </div>
+            <div id="cur-date" class="date">---</div>
+            <div class="initials">SS</div>
         </header>
 
         <div class="hero-wrap">
             <div class="hero-img" id="hero"></div>
+            <div class="hero-fade"></div>
         </div>
 
-        <div class="greeting">
-            <h1 id="greet">Good Afternoon</h1>
-            <p id="weather">Loading weather...</p>
-        </div>
+        <div class="content">
+            <div class="greeting">
+                <h1 id="greet">Good evening</h1>
+                <p id="weather">Loading...</p>
+            </div>
 
-        <div class="grid">
-            <a href="https://instagram.com/srivastsh" class="btn" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.148 3.228-1.667 4.771-4.919 4.919-1.266.058-1.644.069-4.85.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.272 2.695.072 7.053.014 8.333 0 8.741 0 12s.014 3.667.072 4.947c.2 4.358 2.623 6.78 6.981 6.98 1.28.058 1.689.072 4.947.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.623 6.98-6.98.058-1.28.072-1.689.072-4.947s-.014-3.667-.072-4.947c-.2-4.358-2.623-6.78-6.98-6.98C15.667.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-                <span>Instagram</span>
-            </a>
-            <a href="https://x.com/srivastsh" class="btn" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                <span>Twitter</span>
-            </a>
-            <a href="https://linkedin.com/in/srivastsh" class="btn" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                <span>LinkedIn</span>
-            </a>
-            <a href="mailto:srivastsh@gmail.com" class="btn">
-                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                <span>Email</span>
-            </a>
+            <div class="grid">
+                <a href="https://instagram.com/srivastsh" class="btn" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+                    </svg>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://x.com/srivastsh" class="btn" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 4l6.5 8L4 20h2l5.5-6.5L16 20h4l-7-8.5L19 4h-2l-5 6-4-6H4z"/>
+                    </svg>
+                    <span>Twitter</span>
+                </a>
+                <a href="https://linkedin.com/in/srivastsh" class="btn" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="2" width="20" height="20" rx="3" ry="3"/>
+                        <path d="M7 11v6M7 7v.01M11 11v6M11 14a2 2 0 0 1 4 0v3"/>
+                    </svg>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="mailto:srivastsh@gmail.com" class="btn">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="M22 6l-10 7L2 6"/>
+                    </svg>
+                    <span>Email</span>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -192,14 +284,32 @@
         async function updateDashboard() {
             const now = new Date();
             const hrs = now.getHours();
-            
+
             document.getElementById('cur-date').innerText = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
             let img, msg;
-            if (hrs >= 5 && hrs < 11) { msg = "Good Morning"; img = "../morning.jpg"; }
-            else if (hrs >= 11 && hrs < 17) { msg = "Good Afternoon"; img = "../day.jpg"; }
-            else if (hrs >= 17 && hrs < 21) { msg = "Good Evening"; img = "../evening.jpg"; }
-            else { msg = "Good Night"; img = "../night.jpg"; }
+            const headerIcon = document.querySelector('.header-icon svg');
+
+            if (hrs >= 5 && hrs < 11) {
+                msg = "Good morning";
+                img = "../morning.jpg";
+                headerIcon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
+            }
+            else if (hrs >= 11 && hrs < 17) {
+                msg = "Good afternoon";
+                img = "../day.jpg";
+                headerIcon.innerHTML = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+            }
+            else if (hrs >= 17 && hrs < 21) {
+                msg = "Good evening";
+                img = "../evening.jpg";
+                headerIcon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 3v1M12 20v1M5.6 5.6l.7.7M17.7 17.7l.7.7M3 12h1M20 12h1M5.6 18.4l.7-.7M17.7 6.3l.7-.7"/>';
+            }
+            else {
+                msg = "Good night";
+                img = "../night.jpg";
+                headerIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+            }
 
             document.getElementById('greet').innerText = msg;
             const url = `url('${img}')`;
@@ -208,22 +318,24 @@
 
             const weatherEl = document.getElementById('weather');
             try {
-                // Fetch live for 94110 Coordinates
                 const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=37.75&longitude=-122.42&current_weather=true&temperature_unit=fahrenheit');
                 const d = await r.json();
                 const temp = Math.round(d.current_weather.temperature);
                 const code = d.current_weather.weathercode;
-                
-                let desc = "Clear Skies";
-                if (code > 0 && code <= 3) desc = "Mainly Clear";
-                else if (code >= 45 && code <= 48) desc = "Foggy";
-                else if (code >= 51 && code <= 67) desc = "Rainy";
-                else if (code >= 71) desc = "Snowy";
 
-                weatherEl.innerText = `${temp}°F · ${desc} · San Francisco`;
+                let desc = "clear skies";
+                if (code > 0 && code <= 3) desc = "partly cloudy";
+                else if (code >= 45 && code <= 48) desc = "foggy";
+                else if (code >= 51 && code <= 55) desc = "light drizzle";
+                else if (code >= 56 && code <= 67) desc = "rainy";
+                else if (code >= 71 && code <= 77) desc = "snowy";
+                else if (code >= 80 && code <= 82) desc = "rain showers";
+                else if (code >= 95) desc = "thunderstorms";
+
+                weatherEl.innerText = `${temp}°F and ${desc}`;
                 weatherEl.classList.add('loaded');
-            } catch (e) { 
-                weatherEl.innerText = "57°F · Clear Skies · San Francisco"; 
+            } catch (e) {
+                weatherEl.innerText = "57°F and partly cloudy";
                 weatherEl.classList.add('loaded');
             }
         }
