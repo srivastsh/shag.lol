@@ -463,16 +463,37 @@
             return points;
         }
 
-        // Initialize map
+        // Initialize map with better touch/responsive options
         const map = L.map('map', {
             zoomControl: false,
-            attributionControl: false
-        }).setView([30, 0], 1.5);
+            attributionControl: false,
+            worldCopyJump: true,
+            tap: true,
+            touchZoom: true,
+            dragging: true,
+            scrollWheelZoom: false, // Prevent accidental zoom while scrolling
+            doubleClickZoom: true,
+            minZoom: 1,
+            maxZoom: 10
+        }).setView([30, 0], 2);
 
         // Dark map tiles
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
-            maxZoom: 19
+            maxZoom: 19,
+            noWrap: false
         }).addTo(map);
+
+        // Handle resize - recalculate map size
+        const mapContainer = document.getElementById('map');
+        const resizeObserver = new ResizeObserver(() => {
+            map.invalidateSize();
+        });
+        resizeObserver.observe(mapContainer);
+
+        // Also handle orientation change on mobile
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => map.invalidateSize(), 100);
+        });
 
         // Track unique airports and total miles
         const visitedAirports = new Set();
