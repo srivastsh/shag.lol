@@ -463,16 +463,37 @@
             return points;
         }
 
-        // Initialize map
+        // Initialize map with better touch/responsive options
         const map = L.map('map', {
             zoomControl: false,
-            attributionControl: false
-        }).setView([30, 0], 1.5);
+            attributionControl: false,
+            worldCopyJump: true,
+            tap: true,
+            touchZoom: true,
+            dragging: true,
+            scrollWheelZoom: false, // Prevent accidental zoom while scrolling
+            doubleClickZoom: true,
+            minZoom: 1,
+            maxZoom: 10
+        }).setView([30, 0], 2);
 
         // Dark map tiles
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
-            maxZoom: 19
+            maxZoom: 19,
+            noWrap: false
         }).addTo(map);
+
+        // Handle resize - recalculate map size
+        const mapContainer = document.getElementById('map');
+        const resizeObserver = new ResizeObserver(() => {
+            map.invalidateSize();
+        });
+        resizeObserver.observe(mapContainer);
+
+        // Also handle orientation change on mobile
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => map.invalidateSize(), 100);
+        });
 
         // Track unique airports and total miles
         const visitedAirports = new Set();
@@ -529,6 +550,18 @@
         document.getElementById('total-miles').textContent = Math.round(totalMiles).toLocaleString();
         document.getElementById('total-airports').textContent = visitedAirports.size;
 
+        // Convert date to season + year format (e.g., "Winter 25")
+        function getSeasonYear(dateStr) {
+            const date = new Date(dateStr);
+            const month = date.getMonth(); // 0-11
+            const year = date.getFullYear().toString().slice(-2);
+
+            if (month === 11 || month <= 1) return `Winter ${year}`;
+            if (month >= 2 && month <= 4) return `Spring ${year}`;
+            if (month >= 5 && month <= 7) return `Summer ${year}`;
+            return `Fall ${year}`;
+        }
+
         // Populate flights list
         const flightsList = document.getElementById('flights-list');
         flights.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(flight => {
@@ -540,7 +573,7 @@
                     <span class="flight-arrow">→</span>
                     <span class="flight-code">${flight.to}</span>
                 </div>
-                <div class="flight-date">${new Date(flight.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
+                <div class="flight-date">${getSeasonYear(flight.date)}</div>
             `;
             flightsList.appendChild(item);
         });
