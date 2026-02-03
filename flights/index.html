@@ -550,6 +550,18 @@
         document.getElementById('total-miles').textContent = Math.round(totalMiles).toLocaleString();
         document.getElementById('total-airports').textContent = visitedAirports.size;
 
+        // Convert date to season + year format (e.g., "Winter 25")
+        function getSeasonYear(dateStr) {
+            const date = new Date(dateStr);
+            const month = date.getMonth(); // 0-11
+            const year = date.getFullYear().toString().slice(-2);
+
+            if (month === 11 || month <= 1) return `Winter ${year}`;
+            if (month >= 2 && month <= 4) return `Spring ${year}`;
+            if (month >= 5 && month <= 7) return `Summer ${year}`;
+            return `Fall ${year}`;
+        }
+
         // Populate flights list
         const flightsList = document.getElementById('flights-list');
         flights.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(flight => {
@@ -561,7 +573,7 @@
                     <span class="flight-arrow">→</span>
                     <span class="flight-code">${flight.to}</span>
                 </div>
-                <div class="flight-date">${new Date(flight.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
+                <div class="flight-date">${getSeasonYear(flight.date)}</div>
             `;
             flightsList.appendChild(item);
         });
