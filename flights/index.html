@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>flights ✈</title>
+    <meta name="title" content="flights ✈" />
+    <meta name="description" content="shagun's flight map" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://shag.lol/flights/" />
+    <meta property="og:title" content="flights ✈" />
+
+    <link rel="icon" href="../1.png">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        :root {
+            --glass-card: rgba(20, 28, 40, 0.65);
+            --glass-button: rgba(255, 255, 255, 0.08);
+            --glass-button-border: rgba(255, 255, 255, 0.12);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --accent: #64b5f6;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --glass-card: rgba(245, 245, 245, 0.75);
+                --glass-button: rgba(255, 255, 255, 0.5);
+                --glass-button-border: rgba(255, 255, 255, 0.6);
+                --text-primary: #37474f;
+                --text-secondary: rgba(55, 71, 79, 0.6);
+                --accent: #1976d2;
+            }
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            margin: 0; padding: 0;
+            height: 100dvh; width: 100vw;
+            display: flex; justify-content: center; align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            background-color: #0a0e14; overflow: hidden;
+        }
+
+        @media (prefers-color-scheme: light) {
+            body { background-color: #e8e8e8; }
+        }
+
+        .dashboard {
+            width: 100%; height: 100%;
+            max-width: 500px; max-height: 920px;
+            background: var(--glass-card);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            display: flex; flex-direction: column;
+            animation: fadeIn 0.8s ease-out;
+            overflow: hidden;
+        }
+
+        @media (min-width: 600px) {
+            .dashboard {
+                border-radius: 44px;
+                height: 95%;
+                box-shadow: 0 25px 80px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05);
+            }
+        }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 24px 28px 16px;
+            position: relative; z-index: 10;
+        }
+
+        .back-link {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .back-link:hover { opacity: 1; }
+
+        .title {
+            font-family: "Georgia", serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            opacity: 0.9;
+        }
+
+        .map-container {
+            flex: 1;
+            min-height: 300px;
+            position: relative;
+            margin: 0 20px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #map {
+            width: 100%; height: 100%;
+            background: #1a1a2e;
+        }
+
+        .leaflet-container {
+            background: #1a1a2e;
+            font-family: inherit;
+        }
+
+        .content {
+            padding: 20px 28px 32px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 16px 8px;
+            background: var(--glass-button);
+            border: 1px solid var(--glass-button-border);
+            border-radius: 16px;
+        }
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .flights-list {
+            max-height: 180px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+        .flights-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .flights-list::-webkit-scrollbar-thumb {
+            background: var(--text-secondary);
+            border-radius: 2px;
+        }
+
+        .flight-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-button-border);
+        }
+        .flight-item:last-child { border-bottom: none; }
+
+        .flight-route {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .flight-code {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+        .flight-arrow {
+            color: var(--accent);
+            font-size: 0.8rem;
+        }
+        .flight-date {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <a href="../me/" class="back-link">← back</a>
+            <div class="title">Flights</div>
+            <div style="width: 50px;"></div>
+        </header>
+
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
+        <div class="content">
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="total-flights">0</div>
+                    <div class="stat-label">Flights</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="total-miles">0</div>
+                    <div class="stat-label">Miles</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="total-airports">0</div>
+                    <div class="stat-label">Airports</div>
+                </div>
+            </div>
+
+            <div class="flights-list" id="flights-list">
+                <!-- Flights populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Airport coordinates database (add more as needed)
+        const airports = {
+            // US
+            'SFO': { lat: 37.6213, lon: -122.3790, city: 'San Francisco' },
+            'LAX': { lat: 33.9425, lon: -118.4081, city: 'Los Angeles' },
+            'JFK': { lat: 40.6413, lon: -73.7781, city: 'New York' },
+            'EWR': { lat: 40.6895, lon: -74.1745, city: 'Newark' },
+            'ORD': { lat: 41.9742, lon: -87.9073, city: 'Chicago' },
+            'SEA': { lat: 47.4502, lon: -122.3088, city: 'Seattle' },
+            'MIA': { lat: 25.7959, lon: -80.2870, city: 'Miami' },
+            'BOS': { lat: 42.3656, lon: -71.0096, city: 'Boston' },
+            'DFW': { lat: 32.8998, lon: -97.0403, city: 'Dallas' },
+            'DEN': { lat: 39.8561, lon: -104.6737, city: 'Denver' },
+            'ATL': { lat: 33.6407, lon: -84.4277, city: 'Atlanta' },
+            'LAS': { lat: 36.0840, lon: -115.1537, city: 'Las Vegas' },
+            'PHX': { lat: 33.4373, lon: -112.0078, city: 'Phoenix' },
+            'IAD': { lat: 38.9531, lon: -77.4565, city: 'Washington DC' },
+            'SJC': { lat: 37.3639, lon: -121.9289, city: 'San Jose' },
+            'PDX': { lat: 45.5898, lon: -122.5951, city: 'Portland' },
+            'AUS': { lat: 30.1975, lon: -97.6664, city: 'Austin' },
+            'SAN': { lat: 32.7338, lon: -117.1933, city: 'San Diego' },
+            'MSP': { lat: 44.8848, lon: -93.2223, city: 'Minneapolis' },
+            'DTW': { lat: 42.2162, lon: -83.3554, city: 'Detroit' },
+            // International
+            'LHR': { lat: 51.4700, lon: -0.4543, city: 'London' },
+            'CDG': { lat: 49.0097, lon: 2.5479, city: 'Paris' },
+            'NRT': { lat: 35.7720, lon: 140.3929, city: 'Tokyo' },
+            'HND': { lat: 35.5494, lon: 139.7798, city: 'Tokyo' },
+            'SIN': { lat: 1.3644, lon: 103.9915, city: 'Singapore' },
+            'HKG': { lat: 22.3080, lon: 113.9185, city: 'Hong Kong' },
+            'DXB': { lat: 25.2532, lon: 55.3657, city: 'Dubai' },
+            'SYD': { lat: -33.9399, lon: 151.1753, city: 'Sydney' },
+            'AMS': { lat: 52.3105, lon: 4.7683, city: 'Amsterdam' },
+            'FRA': { lat: 50.0379, lon: 8.5622, city: 'Frankfurt' },
+            'ICN': { lat: 37.4602, lon: 126.4407, city: 'Seoul' },
+            'BKK': { lat: 13.6900, lon: 100.7501, city: 'Bangkok' },
+            'DEL': { lat: 28.5562, lon: 77.1000, city: 'Delhi' },
+            'BOM': { lat: 19.0896, lon: 72.8656, city: 'Mumbai' },
+            'YYZ': { lat: 43.6777, lon: -79.6248, city: 'Toronto' },
+            'MEX': { lat: 19.4363, lon: -99.0721, city: 'Mexico City' },
+            'GRU': { lat: -23.4356, lon: -46.4731, city: 'São Paulo' },
+            'CPT': { lat: -33.9715, lon: 18.6021, city: 'Cape Town' },
+            'DUB': { lat: 53.4264, lon: -6.2499, city: 'Dublin' },
+            'BCN': { lat: 41.2974, lon: 2.0833, city: 'Barcelona' },
+            'FCO': { lat: 41.8003, lon: 12.2389, city: 'Rome' },
+            'MUC': { lat: 48.3537, lon: 11.7750, city: 'Munich' },
+            'ZRH': { lat: 47.4647, lon: 8.5492, city: 'Zurich' },
+            'VIE': { lat: 48.1103, lon: 16.5697, city: 'Vienna' },
+            'IST': { lat: 41.2753, lon: 28.7519, city: 'Istanbul' },
+            'DOH': { lat: 25.2609, lon: 51.6138, city: 'Doha' },
+            'PEK': { lat: 40.0799, lon: 116.6031, city: 'Beijing' },
+            'PVG': { lat: 31.1443, lon: 121.8083, city: 'Shanghai' },
+            'KUL': { lat: 2.7456, lon: 101.7072, city: 'Kuala Lumpur' },
+            'MAD': { lat: 40.4983, lon: -3.5676, city: 'Madrid' },
+            'LIS': { lat: 38.7756, lon: -9.1354, city: 'Lisbon' },
+            'CPH': { lat: 55.6180, lon: 12.6508, city: 'Copenhagen' },
+            'ARN': { lat: 59.6498, lon: 17.9238, city: 'Stockholm' },
+            'HEL': { lat: 60.3172, lon: 24.9633, city: 'Helsinki' },
+            'OSL': { lat: 60.1976, lon: 11.1004, city: 'Oslo' },
+        };
+
+        // YOUR FLIGHTS - Edit this array with your Flighty export data
+        // Format: { from: 'CODE', to: 'CODE', date: 'YYYY-MM-DD', flight: 'UA123' (optional) }
+        const flights = [
+            // Example flights - replace with your own!
+            { from: 'SFO', to: 'JFK', date: '2024-01-15', flight: 'UA123' },
+            { from: 'JFK', to: 'LHR', date: '2024-02-20', flight: 'BA178' },
+            { from: 'LHR', to: 'SFO', date: '2024-02-28', flight: 'BA285' },
+            // Add your flights here...
+        ];
+
+        // Calculate distance between two points (Haversine formula)
+        function getDistance(lat1, lon1, lat2, lon2) {
+            const R = 3959; // Earth's radius in miles
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        // Generate arc points for curved flight path
+        function getArcPoints(from, to, numPoints = 50) {
+            const points = [];
+            for (let i = 0; i <= numPoints; i++) {
+                const t = i / numPoints;
+                const lat = from.lat + t * (to.lat - from.lat);
+                let lon = from.lon + t * (to.lon - from.lon);
+
+                // Handle crossing the date line
+                if (Math.abs(to.lon - from.lon) > 180) {
+                    if (from.lon > to.lon) {
+                        lon = from.lon + t * (to.lon + 360 - from.lon);
+                        if (lon > 180) lon -= 360;
+                    } else {
+                        lon = from.lon + t * (to.lon - 360 - from.lon);
+                        if (lon < -180) lon += 360;
+                    }
+                }
+
+                // Add arc curvature
+                const arc = Math.sin(t * Math.PI) * 0.15 * getDistance(from.lat, from.lon, to.lat, to.lon) / 1000;
+                points.push([lat + arc, lon]);
+            }
+            return points;
+        }
+
+        // Initialize map
+        const map = L.map('map', {
+            zoomControl: false,
+            attributionControl: false
+        }).setView([30, 0], 1.5);
+
+        // Dark map tiles
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        // Track unique airports and total miles
+        const visitedAirports = new Set();
+        let totalMiles = 0;
+
+        // Draw flights
+        flights.forEach(flight => {
+            const from = airports[flight.from];
+            const to = airports[flight.to];
+
+            if (!from || !to) {
+                console.warn(`Unknown airport: ${flight.from} or ${flight.to}`);
+                return;
+            }
+
+            visitedAirports.add(flight.from);
+            visitedAirports.add(flight.to);
+            totalMiles += getDistance(from.lat, from.lon, to.lat, to.lon);
+
+            // Draw arc
+            const arcPoints = getArcPoints(from, to);
+            L.polyline(arcPoints, {
+                color: '#64b5f6',
+                weight: 1.5,
+                opacity: 0.7
+            }).addTo(map);
+
+            // Add airport markers
+            [from, to].forEach(airport => {
+                L.circleMarker([airport.lat, airport.lon], {
+                    radius: 4,
+                    fillColor: '#64b5f6',
+                    fillOpacity: 1,
+                    color: '#fff',
+                    weight: 1
+                }).addTo(map);
+            });
+        });
+
+        // Fit map to show all flights
+        if (flights.length > 0) {
+            const allPoints = flights.flatMap(f => {
+                const from = airports[f.from];
+                const to = airports[f.to];
+                return from && to ? [[from.lat, from.lon], [to.lat, to.lon]] : [];
+            });
+            if (allPoints.length > 0) {
+                map.fitBounds(allPoints, { padding: [30, 30] });
+            }
+        }
+
+        // Update stats
+        document.getElementById('total-flights').textContent = flights.length;
+        document.getElementById('total-miles').textContent = Math.round(totalMiles).toLocaleString();
+        document.getElementById('total-airports').textContent = visitedAirports.size;
+
+        // Populate flights list
+        const flightsList = document.getElementById('flights-list');
+        flights.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(flight => {
+            const item = document.createElement('div');
+            item.className = 'flight-item';
+            item.innerHTML = `
+                <div class="flight-route">
+                    <span class="flight-code">${flight.from}</span>
+                    <span class="flight-arrow">→</span>
+                    <span class="flight-code">${flight.to}</span>
+                </div>
+                <div class="flight-date">${new Date(flight.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
+            `;
+            flightsList.appendChild(item);
+        });
+    </script>
+</body>
+</html>
