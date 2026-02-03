@@ -20,7 +20,7 @@
     <meta name="twitter:description" content="shagun srivastava" />
     <meta name="twitter:image" content="https://shag.lol/tag.jpg" />
 
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😁</text></svg>">
+    <link rel="icon" href="../1.png">
 
     <style>
         :root {
@@ -103,13 +103,10 @@
             cursor: pointer; user-select: none;
         }
         .initials {
-            font-family: "Georgia", "Times New Roman", serif;
-            font-weight: 400;
-            font-size: 1.2rem;
-            font-style: italic;
-            color: var(--text-primary);
-            opacity: 0.85;
-            letter-spacing: 0.02em;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
         }
         .reveal-msg {
             font-size: 0.75rem;
@@ -137,8 +134,14 @@
             background-size: cover;
             background-position: center;
             transition: background-image 1.5s ease;
-            -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 45%, black 30%, transparent 70%);
-            mask-image: radial-gradient(ellipse 85% 70% at 50% 45%, black 30%, transparent 70%);
+            -webkit-mask-image:
+                linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%),
+                linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+            -webkit-mask-composite: source-in;
+            mask-image:
+                linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%),
+                linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+            mask-composite: intersect;
         }
 
         .content {
@@ -237,7 +240,7 @@
             <div id="cur-date" class="date">---</div>
             <div class="initials-wrapper" onclick="this.classList.toggle('expanded')">
                 <div class="reveal-msg">made with &lt;3 by shagun</div>
-                <div class="initials">SS</div>
+                <img src="../1.png" alt="SS" class="initials">
             </div>
         </header>
 
