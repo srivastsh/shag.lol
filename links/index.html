@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>links</title>
+    <meta name="title" content="links" />
+    <meta name="description" content="shagun srivastava" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://shag.lol/links/" />
+    <meta property="og:title" content="links" />
+
+    <link rel="icon" href="../1.png">
+
+    <style>
+        :root {
+            --glass-card: rgba(20, 28, 40, 0.65);
+            --glass-button: rgba(255, 255, 255, 0.08);
+            --glass-button-border: rgba(255, 255, 255, 0.12);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --glass-card: rgba(245, 245, 245, 0.75);
+                --glass-button: rgba(255, 255, 255, 0.5);
+                --glass-button-border: rgba(255, 255, 255, 0.6);
+                --text-primary: #37474f;
+                --text-secondary: rgba(55, 71, 79, 0.6);
+            }
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            margin: 0; padding: 0;
+            height: 100dvh; width: 100vw;
+            display: flex; justify-content: center; align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            background-color: #0a0e14; overflow: hidden;
+        }
+
+        @media (prefers-color-scheme: light) {
+            body { background-color: #e8e8e8; }
+        }
+
+        .bg-wash {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            z-index: -1;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .bg-wash {
+                background: linear-gradient(135deg, #e8e8e8 0%, #d4e4ed 50%, #c9d6df 100%);
+            }
+        }
+
+        .dashboard {
+            width: 100%; height: 100%;
+            max-width: 440px; max-height: 900px;
+            background: var(--glass-card);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            display: flex; flex-direction: column;
+            animation: fadeIn 0.8s ease-out;
+            overflow: hidden;
+        }
+
+        @media (min-width: 600px) {
+            .dashboard {
+                border-radius: 44px;
+                height: 95%;
+                box-shadow: 0 25px 80px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05);
+            }
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 48px 28px 32px;
+            overflow-y: auto;
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .avatar {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 16px;
+            border: 3px solid var(--glass-button-border);
+        }
+
+        .name {
+            font-family: "Georgia", serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin: 0 0 6px 0;
+        }
+
+        .bio {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 24px;
+            background: var(--glass-button);
+            border: 1px solid var(--glass-button-border);
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .link:hover {
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        @media (prefers-color-scheme: light) {
+            .link:hover {
+                background: rgba(255,255,255,0.7);
+                border-color: rgba(255,255,255,0.8);
+            }
+        }
+
+        .link:active {
+            transform: scale(0.98);
+        }
+
+        .link svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-primary);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--glass-button-border);
+        }
+
+        .divider-text {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px 0 8px;
+        }
+
+        .footer a {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .footer a:hover {
+            opacity: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-wash"></div>
+
+    <div class="dashboard">
+        <div class="content">
+            <div class="profile">
+                <img src="../1.png" alt="Shagun" class="avatar">
+                <h1 class="name">Shagun Srivastava</h1>
+                <p class="bio">building things in sf</p>
+            </div>
+
+            <div class="links">
+                <a href="../me/" class="link">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    About Me
+                </a>
+
+                <a href="../flights/" class="link">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                    </svg>
+                    Flight Map
+                </a>
+
+                <div class="divider">
+                    <div class="divider-line"></div>
+                    <span class="divider-text">Social</span>
+                    <div class="divider-line"></div>
+                </div>
+
+                <a href="https://instagram.com/srivastsh" target="_blank" rel="noopener noreferrer" class="link">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+                    </svg>
+                    Instagram
+                </a>
+
+                <a href="https://x.com/srivastsh" target="_blank" rel="noopener noreferrer" class="link">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 4l6.5 8L4 20h2l5.5-6.5L16 20h4l-7-8.5L19 4h-2l-5 6-4-6H4z"/>
+                    </svg>
+                    Twitter
+                </a>
+
+                <a href="https://linkedin.com/in/srivastsh" target="_blank" rel="noopener noreferrer" class="link">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="2" width="20" height="20" rx="3" ry="3"/>
+                        <path d="M7 11v6M7 7v.01M11 11v6M11 14a2 2 0 0 1 4 0v3"/>
+                    </svg>
+                    LinkedIn
+                </a>
+
+                <a href="mailto:srivastsh@gmail.com" class="link">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="M22 6l-10 7L2 6"/>
+                    </svg>
+                    Email
+                </a>
+            </div>
+
+            <div class="footer">
+                <a href="https://shag.lol">shag.lol</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
